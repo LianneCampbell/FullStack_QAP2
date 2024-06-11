@@ -1,0 +1,20 @@
+{
+  "name": "fullstack_qap2",
+  "version": "1.0.0",
+  "description": "Files for FullStack JavaScript QAP2 2024",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LianneCampbell/FullStack_QAP2.git"
+  },
+  "author": "Lianne Campbell",
+  "license": "UNLICENSED",
+  "bugs": {
+    "url": "https://github.com/LianneCampbell/FullStack_QAP2/issues"
+  },
+  "homepage": "https://github.com/LianneCampbell/FullStack_QAP2#readme"
+}
