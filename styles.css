@@ -48,6 +48,15 @@ header {
     margin: auto;
 }
 
+.content a {
+    text-decoration: none;
+    color: #333;
+    padding: 10px;
+}
+.content a:hover {
+    background-color: #ddd;
+}
+
 .honk-title {
     font-family: "Honk", system-ui;
     font-optical-sizing: auto;
