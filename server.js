@@ -1,78 +1,122 @@
-// Import the http module for creating web servers
 const http = require('http');
-// Import the fs module for interacting with the file system
 const fs = require('fs');
-// Import the events module for creating and handling custom events
+const path = require('path');
 const EventEmitter = require('events');
 
 // Global variable for enabling/disabling debug logs
 global.DEBUG = true;
 
 // Create an instance of EventEmitter
-const eventEmitter = new EventEmitter();
+class MyEmitter extends EventEmitter {}
+const myEmitter = new MyEmitter();
 
 // Function to fetch and serve a file
-function fetchFile(fileName, response) {
-    // Read the file asynchronously
-    fs.readFile(fileName, (error, content) => {
+function fetchFile(filePath, contentType, response) {
+    fs.readFile(filePath, (error, content) => {
         if (error) {
-            // If there's an error reading the file, send a 500 Internal Server Error response
+            myEmitter.emit('fileReadError', filePath);
             response.writeHead(500, { 'Content-Type': 'text/plain' });
             response.end('500 Internal Server Error');
         } else {
-            // If the file is read successfully, send a 200 OK response with the file content
-            response.writeHead(200, { 'Content-Type': 'text/html' });
+            myEmitter.emit('fileReadSuccess', filePath);
+            response.writeHead(200, { 'Content-Type': contentType });
             response.end(content, 'utf-8');
         }
     });
 }
 
-// Create an HTTP server
+// Function to log events to disk
+function logEventToFile(message) {
+    const logFileName = `log_${new Date().toISOString().slice(0, 10)}.txt`;
+    const logFilePath = path.join(__dirname, 'logs', logFileName);
+    fs.appendFile(logFilePath, `${new Date().toISOString()} - ${message}\n`, (err) => {
+        if (err) console.error('Failed to write to log file', err);
+    });
+}
+
+// Add event listeners
+myEmitter.on('pageAccessed', (page) => {
+    const message = `The ${page} page was accessed.`;
+    console.log(message);
+    logEventToFile(message);
+});
+
+myEmitter.on('nonHomeAccess', (page) => {
+    const message = `A non-home page (${page}) was accessed.`;
+    console.log(message);
+    logEventToFile(message);
+});
+
+myEmitter.on('fileReadSuccess', (filePath) => {
+    const message = `File read successfully: ${filePath}`;
+    console.log(message);
+    logEventToFile(message);
+});
+
+myEmitter.on('fileReadError', (filePath) => {
+    const message = `Error reading file: ${filePath}`;
+    console.log(message);
+    logEventToFile(message);
+});
+
 const server = http.createServer((request, response) => {
-    if (DEBUG) console.log('Request URL:', request.url); // Log the request URL if debugging is enabled
-    let filePath = './views/'; // Base directory for HTML files
+    if (DEBUG) console.log('Request URL:', request.url);
+
+    let filePath = './views' + request.url;
+    let contentType = 'text/html';
+    let isHome = false;
+
     switch (request.url) {
         case '/':
-            filePath += 'index.html'; // Serve the index.html file for the root URL
-            eventEmitter.emit('pageAccessed', 'index'); // Emit a custom event
+            filePath = './views/index.html';
+            isHome = true;
+            myEmitter.emit('pageAccessed', 'index');
             break;
         case '/about':
-            filePath += 'about.html'; // Serve the about.html file for the /about URL
-            eventEmitter.emit('pageAccessed', 'about'); // Emit a custom event
+            filePath = './views/about.html';
+            myEmitter.emit('pageAccessed', 'about');
             break;
         case '/contact':
-            filePath += 'contact.html'; // Serve the contact.html file for the /contact URL
-            eventEmitter.emit('pageAccessed', 'contact'); // Emit a custom event
+            filePath = './views/contact.html';
+            myEmitter.emit('pageAccessed', 'contact');
             break;
         case '/subscribe':
-            filePath += 'subscribe.html'; // Serve the subscribe.html file for the /subscribe URL
-            eventEmitter.emit('pageAccessed', 'subscribe'); // Emit a custom event
+            filePath = './views/subscribe.html';
+            myEmitter.emit('pageAccessed', 'subscribe');
             break;
         case '/overview':
-            filePath += 'overview.html'; // Serve the overview.html file for the /overview URL
-            eventEmitter.emit('pageAccessed', 'overview'); // Emit a custom event
+            filePath = './views/overview.html';
+            myEmitter.emit('pageAccessed', 'overview');
             break;
         case '/events':
-            filePath += 'events.html'; // Serve the events.html file for the /events URL
-            eventEmitter.emit('pageAccessed', 'events'); // Emit a custom event
+            filePath = './views/events.html';
+            myEmitter.emit('pageAccessed', 'events');
+            break;
+        case '/styles.css':
+            filePath = './styles.css';
+            contentType = 'text/css';
             break;
         default:
-            // For any other URL, send a 404 Not Found response
             if (DEBUG) console.log('404 Not Found');
             response.writeHead(404, { 'Content-Type': 'text/plain' });
             response.end('404 Not Found');
             return;
     }
+
+    if (!isHome && request.url !== '/styles.css') {
+        myEmitter.emit('nonHomeAccess', request.url);
+    }
+
     if (DEBUG) console.log(filePath);
-    fetchFile(filePath, response);
+    fetchFile(filePath, contentType, response);
 });
 
-// Add an event listener for the custom 'pageAccessed' event
-eventEmitter.on('pageAccessed', (page) => {
-    console.log(`The ${page} page was accessed.`);
-});
+// Create logs directory if it doesn't exist
+if (!fs.existsSync('./logs')) {
+    fs.mkdirSync('./logs');
+}
 
 // Make the server listen on port 3000
 server.listen(3000, () => {
-    console.log('Server is running on port 3000...'); // Log a message when the server starts
+    console.log('Server is running on port 3000...');
 });
