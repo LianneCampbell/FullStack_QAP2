@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Subscribe</title>
     
     <link rel="stylesheet" href="../styles.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +11,67 @@
     <link href="https://fonts.googleapis.com/css2?family=Honk&display=swap" rel="stylesheet">
 </head>
 <body>
-    <h1 class="honk-title">Subscribe</h1>
-    <b><a href="http://localhost:3000/">Back to Home</a></b> <p>&copy; Lianne Campbell 2024</p>
+    <header>
+        <h1 class="honk-title">Subscribe</h1>
+        </header>
+        <hr>
+        <div class="menu">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+            <a href="/subscribe">Subscribe</a>
+            <a href="/overview">Overview</a>
+            <a href="/events">Events</a>
+        </div>
+        <hr>
+        <div class="contentbox">
+        <div class="content">
+            <h2>QAP2</h2>
+            <p>Welcome to FullStack JavaScript</p>
+ 
+            <main>
+                <section id="subscription-info">
+                    <p>Welcome to our newsletter subscription page! Stay informed and engaged with our latest updates, news, and exclusive offers.</p>
+                    <p>By subscribing to our newsletter, you will receive:</p>
+                    <ul>
+                        <li>Early notifications about new products</li>
+                        <li>Special promotions and discounts</li>
+                        <li>Insightful articles tailored to your interests</li>
+                    </ul>
+                    <p>Join our community today!</p>
+                </section>
+        
+                <section id="subscription-form">
+                    <h2>Subscribe Now</h2>
+                    <form action="/subscribe" method="POST">
+                        <label for="name">Your Name:</label>
+                        <input type="text" id="name" name="name" required>
+                        <label for="email">Your Email:</label>
+                        <input type="email" id="email" name="email" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                    <p>We respect your privacy. Your information is safe with us.</p>
+                </section>
+        
+                <section id="testimonials">
+                    <h2>What Our Subscribers Say</h2>
+                    <blockquote>
+                        <p>"Subscribing to the newsletter was the best decision I made. I always look forward to the insightful articles and exclusive offers."</p>
+                        <cite>- John Doe</cite>
+                    </blockquote>
+                    <blockquote>
+                        <p>"I love being a part of this community. The newsletter keeps me up-to-date with the latest news and product releases."</p>
+                        <cite>- Jane Smith</cite>
+                    </blockquote>
+                </section>
+            </main>
+    
+            <br>to see the different pages served by the server.</p>
+        </div>
+        </div>
+        <hr>
+        <footer>
+            <b><a href="http://localhost:3000/" class="honk-title">Back to Home</a></b> <p>&copy; Lianne Campbell 2024</p>
+            </footer>
 </body>
 </html>

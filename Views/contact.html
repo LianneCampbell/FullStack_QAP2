@@ -3,7 +3,7 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
+        <title>Contact</title>
 
         <link rel="stylesheet" href="../styles.css">
         <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -11,7 +11,58 @@
         <link href="https://fonts.googleapis.com/css2?family=Honk&display=swap" rel="stylesheet">
     </head>
     <body>
+        <header>
         <h1 class="honk-title">Contact</h1>
-        <b><a href="http://localhost:3000/">Back to Home</a></b> <p>&copy; Lianne Campbell 2024</p>
+        </header>
+        <hr>
+        <div class="menu">
+            <a href="/">Home</a>
+            <a href="/about">About</a>
+            <a href="/contact">Contact</a>
+            <a href="/subscribe">Subscribe</a>
+            <a href="/overview">Overview</a>
+            <a href="/events">Events</a>
+        </div>
+        <hr>
+        <div class="contentbox">
+        <div class="content">
+            <h2>QAP2</h2>
+            <p>Welcome to FullStack JavaScript</p>
+            <main>
+                <section id="contact-info">
+                    <p>Have a question, suggestion, or just want to say hello? We'd love to hear from you!</p>
+                    <p>Feel free to reach out to us using the contact form below or via email or phone.</p>
+                    <p>We'll do our best to respond to your message as soon as possible.</p>
+                </section>
+        
+                <section id="contact-form">
+                    <h2>Send Us a Message</h2>
+                    <form action="/contact" method="POST">
+                        <label for="name">Your Name:</label>
+                        <input type="text" id="name" name="name" required>
+                        <label for="email">Your Email:</label>
+                        <input type="email" id="email" name="email" required>
+                        <label for="message">Your Message:</label>
+                        <textarea id="message" name="message" rows="6" required></textarea>
+                        <button type="submit">Send Message</button>
+                    </form>
+                </section>
+        
+                <section id="contact-details">
+                    <h2>Contact Information</h2>
+                    <p>If you prefer to reach us directly, here are our contact details:</p>
+                    <ul>
+                        <li>Email: <a href="mailto:info@example.com">info@example.com</a></li>
+                        <li>Phone: +1 (123) 456-7890</li>
+                    </ul>
+                    <p>Our office hours are Monday to Friday, 9:00 AM to 5:00 PM (EST).</p>
+                </section>
+            </main>
+        </div>
+        </div>
+        <hr>
+        <footer>
+            <b><a href="http://localhost:3000/" class="honk-title">Back to Home</a></b> <p>&copy; Lianne Campbell 2024</p>
+            </footer>
     </body>
     </html>
