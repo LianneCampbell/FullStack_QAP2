@@ -2,6 +2,7 @@ const http = require('http');
 const fs = require('fs');
 const path = require('path');
 const EventEmitter = require('events');
+const axios = require('axios'); // Import axios for making HTTP requests
 
 // Global variable for enabling/disabling debug logs
 global.DEBUG = true;
@@ -92,10 +93,17 @@ const server = http.createServer((request, response) => {
             filePath = './views/events.html';
             myEmitter.emit('pageAccessed', 'events');
             break;
+        case '/application':
+            filePath = './views/application.html';
+            myEmitter.emit('pageAccessed', 'application');
+            break;
         case '/styles.css':
             filePath = './styles.css';
             contentType = 'text/css';
             break;
+        case '/daily-info':
+            fetchDailyInfo(response);
+            return;
         default:
             if (DEBUG) console.log('404 Not Found');
             response.writeHead(404, { 'Content-Type': 'text/plain' });
@@ -114,6 +122,31 @@ const server = http.createServer((request, response) => {
 // Create logs directory if it doesn't exist
 if (!fs.existsSync('./logs')) {
     fs.mkdirSync('./logs');
+}
+
+// Fetch daily information (e.g., news or weather) using an external API
+async function fetchDailyInfo(response) {
+    try {
+        const apiKey = '6df6899f08af4b8cb27d1a45251a28b6'; // Replace with your actual API key
+        const apiUrl = `https://newsapi.org/v2/top-headlines?country=us&apiKey=${apiKey}`;
+        const result = await axios.get(apiUrl);
+        const articles = result.data.articles;
+
+        response.writeHead(200, { 'Content-Type': 'text/html' });
+        response.write('<html><body><h1>Daily News</h1><ul>');
+
+        articles.forEach(article => {
+            response.write(`<li><a href="${article.url}">${article.title}</a></li>`);
+        });
+
+        response.write('</ul></body></html>');
+        response.end();
+
+    } catch (error) {
+        console.error('Error fetching daily info:', error);
+        response.writeHead(500, { 'Content-Type': 'text/plain' });
+        response.end('500 Internal Server Error');
+    }
 }
 
 // Make the server listen on port 3000
