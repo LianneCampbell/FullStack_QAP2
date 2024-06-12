@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Application</title>
+    <link rel="stylesheet" href="../styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Honk&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <h1 class="honk-title">Application</h1>
+    </header>
+    <hr>
+    <div class="menu">
+        <a href="/">Home</a>
+        <a href="/about">About</a>
+        <a href="/contact">Contact</a>
+        <a href="/subscribe">Subscribe</a>
+        <a href="/overview">Overview</a>
+        <a href="/events">Events</a>
+        <a href="/application">Application</a>
+        <a href="/daily-info">Daily Info</a>
+    </div>
+    <hr>
+    <div class="contentbox">
+        <div class="content">
+            <h2>Apply Now</h2>
+            <br>
+            <p>Welcome to the application page for FullStack JavaScript. Please fill out the form below to apply.</p>
+            <br>
+            <p>Our application process is designed to be straightforward and efficient. <br>
+            We are looking for motivated individuals who are passionate about learning FullStack JavaScript. <br>
+            Once you submit your application, our team will review it and get back to you within a few days.</p>
+            <form action="/submit-application" method="post">
+            <form action="/submit-application" method="post">
+                <br>
+                <div>
+                    <label for="name">Name:</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+                <br>
+                <div>
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <br>
+                <div>
+                    <label for="phone">Phone:</label>
+                    <input type="tel" id="phone" name="phone" required>
+                </div>
+                <br>
+                <div>
+                    <label for="message">Why do you want to apply?</label>
+                    <textarea id="message" name="message" rows="4" required></textarea>
+                </div>
+                <br>
+                <div>
+                    <button type="submit">Submit</button>
+                    <br>
+                </div>
+            </form>
+            <p>Thank you for choosing our company!</p>
+        </div>
+    </div>
+    <hr>
+    <footer>
+        <b><a href="http://localhost:3000/">Back to Home</a></b>
+        <p>&copy; Lianne Campbell 2024</p>
+    </footer>
+</body>
+</html>
